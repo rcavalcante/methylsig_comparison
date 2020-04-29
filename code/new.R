@@ -1,5 +1,4 @@
-# module load singularity/3.5.2
-# singularityshell orochi_r_v1_manual
+# docker run -ti -v /nfs/turbo/epicore-active:/nfs/turbo/epicore-active umichbfxcore/orochi_r:v1_manual
 # R
 
 setwd('/nfs/turbo/epicore-active/rcavalca/methylsig_comparison')

@@ -1,5 +1,4 @@
-# module load singularity/3.5.2
-# singularityshell r_344
+# docker run -ti -v /nfs/turbo/epicore-active:/nfs/turbo/epicore-active umichbfxcore/r_344:latest
 # R
 
 setwd('/nfs/turbo/epicore-active/rcavalca/methylsig_comparison')
