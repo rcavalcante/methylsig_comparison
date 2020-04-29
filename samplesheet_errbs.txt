@@ -1,0 +1,7 @@
+core	run	lab	sample	subject	group
+1	Run_testerrbs	epicore	MDAMB_231_1DR	A	DR
+2	Run_testerrbs	epicore	MDAMB_231_1DS	B	DS
+3	Run_testerrbs	epicore	MDAMB_231_2DR	C	DR
+4	Run_testerrbs	epicore	MDAMB_231_2DS	A	DS
+5	Run_testerrbs	epicore	MDAMB_231_3DR	B	DR
+6	Run_testerrbs	epicore	MDAMB_231_3DS	C	DS
