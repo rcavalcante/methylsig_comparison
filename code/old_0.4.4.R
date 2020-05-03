@@ -5,7 +5,6 @@ setwd('/nfs/turbo/epicore-active/rcavalca/methylsig_comparison')
 
 library(bsseq)
 library(methylSig)
-library(tidyverse)
 
 pdata = read.table('samplesheet_errbs.txt', sep = '\t', header = T, as.is = T)
 pdata$group = relevel(factor(pdata$group), ref = 'DS')
@@ -88,6 +87,5 @@ old_0.4.4_local_df = data.frame(
 )
 
 mcols(old_0.4.4_local_gr) = old_0.4.4_local_df
-
 
 save(list = c('old_0.4.4_gr', 'old_0.4.4_local_gr'), file = 'rda/old_0.4.4_msig.rda')

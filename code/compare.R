@@ -39,7 +39,7 @@ comparisons = expand.grid(
     stringsAsFactors = F)
 
 within_versions = subset(comparisons, version1 == version2 & test1 != test2)[1:3, ]
-within_tests = subset(comparisons, version1 != version2 & test1 == test2)[c(1:3, 7:9), ]
+within_tests = subset(comparisons, version1 != version2 & test1 == test2)[c(1,2,4,7,8,10), ]
 comparisons = rbind(within_versions, within_tests)
 
 for(i in seq(nrow(comparisons))) {
