@@ -21,7 +21,7 @@ bs = filter_loci_by_coverage(bs = bs, min_count = 10, max_count = 500)
 
 bs = filter_loci_by_group_coverage(bs = bs, group_column = 'group', min_samples_per_group = c(DR = 2, DS = 2))
 
-new_gr = diff_methylsig(
+v0.99.4_gr = diff_methylsig(
     bs = bs,
     group_column = 'group',
     comparison_groups = c(case = 'DR', control = 'DS'),
@@ -30,7 +30,7 @@ new_gr = diff_methylsig(
     t_approx = TRUE,
     n_cores = 1)
 
-new_local_gr = diff_methylsig(
+v0.99.4_local_gr = diff_methylsig(
     bs = bs,
     group_column = 'group',
     comparison_groups = c(case = 'DR', control = 'DS'),
@@ -39,4 +39,4 @@ new_local_gr = diff_methylsig(
     t_approx = TRUE,
     n_cores = 1)
 
-save(list = c('new_gr', 'new_local_gr'), file = 'rda/new_msig.rda')
+save(list = c('v0.99.4_gr', 'v0.99.4_local_gr'), file = 'rda/v0.99.4_msig.rda')

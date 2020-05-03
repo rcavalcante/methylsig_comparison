@@ -4,30 +4,30 @@
 setwd('/nfs/turbo/epicore-active/rcavalca/methylsig_comparison')
 library(GenomicRanges)
 
-load('rda/new_msig.rda')
-load('rda/old_msig.rda')
-load('rda/old_0.4.4_msig.rda')
+load('rda/v0.99.4_msig.rda')
+load('rda/v0.5.0_msig.rda')
+load('rda/v0.4.4_msig.rda')
 
 # Are all the starts the same?
 # If they are, don't need to do findOverlaps()
-all(start(new_gr) == start(old_gr))
-all(start(old_gr) == start(old_0.4.4_gr))
+all(start(v0.99.4_gr) == start(v0.5.0_gr))
+all(start(v0.5.0_gr) == start(v0.4.4_gr))
 
-all(start(new_local_gr) == start(old_local_gr))
-all(start(old_local_gr) == start(old_0.4.4_local_gr))
+all(start(v0.99.4_local_gr) == start(v0.5.0_local_gr))
+all(start(v0.5.0_local_gr) == start(v0.4.4_local_gr))
 
 results = list(
     v0.99.4 = list(
-        no_local = new_gr,
-        local = new_local_gr
+        no_local = v0.99.4_gr,
+        local = v0.99.4_local_gr
     ),
     v0.5.0 = list(
-        no_local = old_gr,
-        local = old_local_gr
+        no_local = v0.5.0_gr,
+        local = v0.5.0_local_gr
     ),
     v0.4.4 = list(
-        no_local = old_0.4.4_gr,
-        local = old_0.4.4_local_gr
+        no_local = v0.4.4_gr,
+        local = v0.4.4_local_gr
     )
 )
 

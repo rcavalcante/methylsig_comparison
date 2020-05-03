@@ -23,7 +23,7 @@ bs = methylSigReadData(
     verbose = TRUE)
 rownames(pData(bs)) = pData(bs)$sample
 
-old_gr = methylSigCalc(
+v0.5.0_gr = methylSigCalc(
     meth = bs,
     comparison = 'group',
     dispersion= 'both',
@@ -34,7 +34,7 @@ old_gr = methylSigCalc(
     num.cores = 1
 )
 
-colnames(mcols(old_gr)) = c(
+colnames(mcols(v0.5.0_gr)) = c(
     'disp_est',
     'log_lik_ratio',
     'df',
@@ -45,7 +45,7 @@ colnames(mcols(old_gr)) = c(
     'pvalue',
     'fdr')
 
-old_local_gr = methylSigCalc(
+v0.5.0_local_gr = methylSigCalc(
     meth = bs,
     comparison = 'group',
     dispersion= 'both',
@@ -56,7 +56,7 @@ old_local_gr = methylSigCalc(
     num.cores = 1
 )
 
-colnames(mcols(old_local_gr)) = c(
+colnames(mcols(v0.5.0_local_gr)) = c(
     'disp_est',
     'log_lik_ratio',
     'df',
@@ -67,4 +67,4 @@ colnames(mcols(old_local_gr)) = c(
     'pvalue',
     'fdr')
 
-save(list = c('old_gr', 'old_local_gr'), file = 'rda/old_msig.rda')
+save(list = c('v0.5.0_gr', 'v0.5.0_local_gr'), file = 'rda/v0.5.0_msig.rda')
