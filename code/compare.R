@@ -60,7 +60,7 @@ for(i in seq(nrow(comparisons))) {
     png(sprintf('images/%s_meth_case.png', file), height = 6, width = 6, units = 'in', res = 300)
         plot(result1$meth_case, result2$meth_case,
             pch = 20,
-            main = title,
+            main = sprintf('%s meth_case', title),
             xlab = sprintf('%s meth_case', xlab_str),
             ylab = sprintf('%s meth_case', ylab_str))
         abline(a = 0, b = 1, col = 'red')
@@ -69,7 +69,7 @@ for(i in seq(nrow(comparisons))) {
     png(sprintf('images/%s_meth_control.png', file), height = 6, width = 6, units = 'in', res = 300)
         plot(result1$meth_control, result2$meth_control,
             pch = 20,
-            main = title,
+            main = sprintf('%s meth_control', title),
             xlab = sprintf('%s meth_control', xlab_str),
             ylab = sprintf('%s meth_control', ylab_str))
         abline(a = 0, b = 1, col = 'red')
@@ -78,7 +78,7 @@ for(i in seq(nrow(comparisons))) {
     png(sprintf('images/%s_meth_diff.png', file), height = 6, width = 6, units = 'in', res = 300)
         plot(result1$meth_diff, result2$meth_diff,
             pch = 20,
-            main = title,
+            main = sprintf('%s meth_diff', title),
             xlab = sprintf('%s meth_diff', xlab_str),
             ylab = sprintf('%s meth_diff', ylab_str))
         abline(a = 0, b = 1, col = 'red')
@@ -87,9 +87,9 @@ for(i in seq(nrow(comparisons))) {
     png(sprintf('images/%s_pvalue.png', file), height = 6, width = 6, units = 'in', res = 300)
         plot(result1$pvalue, result2$pvalue,
             pch = 20,
-            main = title,
-            xlab = sprintf('%s meth_diff', xlab_str),
-            ylab = sprintf('%s meth_diff', ylab_str))
+            main = sprintf('%s pvalue', title),
+            xlab = sprintf('%s pvalue', xlab_str),
+            ylab = sprintf('%s pvalue', ylab_str))
         abline(a = 0, b = 1, col = 'red')
     dev.off()
 
