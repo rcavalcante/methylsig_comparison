@@ -6,6 +6,7 @@ library(GenomicRanges)
 
 load('rda/v0.99.4_msig.rda')
 load('rda/v0.5.0_msig.rda')
+load('rda/v0.5.0_fix_msig.rda')
 load('rda/v0.4.4_msig.rda')
 
 # Are all the starts the same?
@@ -25,6 +26,10 @@ results = list(
         no_local = v0.5.0_gr,
         local = v0.5.0_local_gr
     ),
+    v0.5.0_fix = list(
+        no_local = v0.5.0_fix_gr,
+        local = v0.5.0_fix_local_gr
+    ),
     v0.4.4 = list(
         no_local = v0.4.4_gr,
         local = v0.4.4_local_gr
@@ -32,14 +37,14 @@ results = list(
 )
 
 comparisons = expand.grid(
-    version1 = c('v0.99.4','v0.5.0','v0.4.4'),
-    version2 = c('v0.99.4','v0.5.0','v0.4.4'),
+    version1 = c('v0.99.4','v0.5.0','v0.5.0_fix','v0.4.4'),
+    version2 = c('v0.99.4','v0.5.0','v0.5.0_fix','v0.4.4'),
     test1 = c('no_local', 'local'),
     test2 = c('no_local', 'local'),
     stringsAsFactors = F)
 
-within_versions = subset(comparisons, version1 == version2 & test1 != test2)[1:3, ]
-within_tests = subset(comparisons, version1 != version2 & test1 == test2)[c(1,2,4,7,8,10), ]
+within_versions = subset(comparisons, version1 == version2 & test1 != test2)[1:4, ]
+within_tests = subset(comparisons, version1 != version2 & test1 == test2)[c(1,2,3,5,6,9,13,14,15,17,18,21), ]
 comparisons = rbind(within_versions, within_tests)
 
 for(i in seq(nrow(comparisons))) {
