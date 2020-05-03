@@ -34,6 +34,17 @@ old_gr = methylSigCalc(
     num.cores = 1
 )
 
+colnames(mcols(old_gr)) = c(
+    'disp_est',
+    'log_lik_ratio',
+    'df',
+    'meth_case',
+    'meth_control',
+    'meth_diff',
+    'direction',
+    'pvalue',
+    'fdr')
+
 old_local_gr = methylSigCalc(
     meth = bs,
     comparison = 'group',
@@ -45,4 +56,15 @@ old_local_gr = methylSigCalc(
     num.cores = 1
 )
 
-save(list = c('old_gr', 'old_local_gr') file = 'rda/old_msig.rda')
+colnames(mcols(old_local_gr)) = c(
+    'disp_est',
+    'log_lik_ratio',
+    'df',
+    'meth_case',
+    'meth_control',
+    'meth_diff',
+    'direction',
+    'pvalue',
+    'fdr')
+
+save(list = c('old_gr', 'old_local_gr'), file = 'rda/old_msig.rda')

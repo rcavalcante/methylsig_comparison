@@ -39,4 +39,4 @@ new_local_gr = diff_methylsig(
     t_approx = TRUE,
     n_cores = 1)
 
-save(list = c('new_gr', 'new_local_gr') file = 'rda/new_msig.rda')
+save(list = c('new_gr', 'new_local_gr'), file = 'rda/new_msig.rda')

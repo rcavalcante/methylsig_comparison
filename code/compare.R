@@ -6,87 +6,91 @@ library(GenomicRanges)
 
 load('rda/new_msig.rda')
 load('rda/old_msig.rda')
+load('rda/old_0.4.4_msig.rda')
 
-png('images/msig_new_old_meth_case.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_case, old_gr$meth.DR, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+# Are all the starts the same?
+# If they are, don't need to do findOverlaps()
+all(start(new_gr) == start(old_gr))
+all(start(old_gr) == start(old_0.4.4_gr))
 
-png('images/msig_new_local_no_meth_case.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_case, new_local_gr$meth_case, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+all(start(new_local_gr) == start(old_local_gr))
+all(start(old_local_gr) == start(old_0.4.4_local_gr))
 
-png('images/msig_old_local_no_meth_case.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(old_gr$meth.DR, old_local_gr$meth.DR, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+results = list(
+    v0.99.4 = list(
+        no_local = new_gr,
+        local = new_local_gr
+    ),
+    v0.5.0 = list(
+        no_local = old_gr,
+        local = old_local_gr
+    ),
+    v0.4.4 = list(
+        no_local = old_0.4.4_gr,
+        local = old_0.4.4_local_gr
+    )
+)
 
-png('images/msig_new_local_old_local_meth_case.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_local_gr$meth_case, old_local_gr$meth.DR, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+comparisons = expand.grid(
+    version1 = c('v0.99.4','v0.5.0','v0.4.4'),
+    version2 = c('v0.99.4','v0.5.0','v0.4.4'),
+    test1 = c('no_local', 'local'),
+    test2 = c('no_local', 'local'),
+    stringsAsFactors = F)
 
+within_versions = subset(comparisons, version1 == version2 & test1 != test2)[1:3, ]
+within_tests = subset(comparisons, version1 != version2 & test1 == test2)[c(1:3, 7:9), ]
+comparisons = rbind(within_versions, within_tests)
 
+for(i in seq(nrow(comparisons))) {
+    version1 = comparisons[i, 'version1']
+    version2 = comparisons[i, 'version2']
+    test1 = comparisons[i, 'test1']
+    test2 = comparisons[i, 'test2']
 
-png('images/msig_new_old_meth_control.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_control, old_gr$meth.DS, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    xlab_str = sprintf('%s %s', version1, test1)
+    ylab_str = sprintf('%s %s', version2, test2)
 
-png('images/msig_new_local_no_meth_control.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_control, new_local_gr$meth_control, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    title = sprintf('%s %s versus %s %s', version1, test1, version2, test2)
+    file = gsub(' ', '_', title)
 
-png('images/msig_old_local_no_meth_control.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(old_gr$meth.DS, old_local_gr$meth.DS, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    result1 = results[[version1]][[test1]]
+    result2 = results[[version2]][[test2]]
 
-png('images/msig_new_local_old_local_meth_control.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_local_gr$meth_control, old_local_gr$meth.DS, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    png(sprintf('images/%s_meth_case.png', file), height = 6, width = 6, units = 'in', res = 300)
+        plot(result1$meth_case, result2$meth_case,
+            pch = 20,
+            main = title,
+            xlab = sprintf('%s meth_case', xlab_str),
+            ylab = sprintf('%s meth_case', ylab_str))
+        abline(a = 0, b = 1, col = 'red')
+    dev.off()
 
+    png(sprintf('images/%s_meth_control.png', file), height = 6, width = 6, units = 'in', res = 300)
+        plot(result1$meth_control, result2$meth_control,
+            pch = 20,
+            main = title,
+            xlab = sprintf('%s meth_control', xlab_str),
+            ylab = sprintf('%s meth_control', ylab_str))
+        abline(a = 0, b = 1, col = 'red')
+    dev.off()
 
-png('images/msig_new_old_meth_diff.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_diff, old_gr$meth.diff, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    png(sprintf('images/%s_meth_diff.png', file), height = 6, width = 6, units = 'in', res = 300)
+        plot(result1$meth_diff, result2$meth_diff,
+            pch = 20,
+            main = title,
+            xlab = sprintf('%s meth_diff', xlab_str),
+            ylab = sprintf('%s meth_diff', ylab_str))
+        abline(a = 0, b = 1, col = 'red')
+    dev.off()
 
-png('images/msig_new_local_no_meth_diff.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$meth_diff, new_local_gr$meth_diff, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+    png(sprintf('images/%s_pvalue.png', file), height = 6, width = 6, units = 'in', res = 300)
+        plot(result1$pvalue, result2$pvalue,
+            pch = 20,
+            main = title,
+            xlab = sprintf('%s meth_diff', xlab_str),
+            ylab = sprintf('%s meth_diff', ylab_str))
+        abline(a = 0, b = 1, col = 'red')
+    dev.off()
 
-png('images/msig_old_local_no_meth_diff.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(old_gr$meth.diff, old_local_gr$meth.diff, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
-
-png('images/msig_new_local_old_local_meth_diff.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_local_gr$meth_diff, old_local_gr$meth.diff, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
-
-
-png('images/msig_new_old_pvalue.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$pvalue, old_gr$pvalue, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
-
-png('images/msig_new_local_no_pvalue.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_gr$pvalue, new_local_gr$pvalue, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
-
-png('images/msig_old_local_no_pvalue.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(old_gr$pvalue, old_local_gr$pvalue, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
-
-png('images/msig_new_local_old_local_pvalue.png', height = 6, width = 6, units = 'in', res = 300)
-    plot(new_local_gr$pvalue, old_local_gr$pvalue, pch = 20)
-    abline(a = 0, b = 1, col = 'red')
-dev.off()
+}
